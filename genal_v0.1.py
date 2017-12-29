@@ -10,16 +10,16 @@ from scipy import array
 import copy as copy
 
 ###############################################################################
-##      Definicion de constantes de programa
+##      global constants definition
 ###############################################################################    
         
 NA = 'na'
-GENDIM = 2 # dimension del gen a optimizar
-MUTRATE = 0.10  # tasa de mutacion del total de la poblacion
-MUTA = .15 # variacion en desviación estandar del máximo en cada mutacion
+GENDIM = 2 # chromosome dimension
+MUTRATE = 0.10  # mutation rate
+MUTA = .15 # maximum variability on mutation
 
 ###############################################################################
-##      Definicion de individuos
+##      individual definition
 ###############################################################################    
 
 class individual:
@@ -38,7 +38,7 @@ class individual:
         del(self)
 
 ###############################################################################
-##      Definicion de manager de comunidades
+##      community manager definition
 ###############################################################################    
         
 class comManager:
@@ -175,10 +175,10 @@ class comManager:
     def xprint(self):
         
         print ("\n***********************************************\n")
-        print ("Resumen de ejecución...\n")    
-        print "     Numero de corridas:", self.runNumber
-        print "     Numero de individuos:", self.population
-        print "\n... los mejores 5 ...\n"
+        print ("Exec abst...\n")    
+        print "     Runs:", self.runNumber
+        print "     Population size:", self.population
+        print "\n... the top 5 ...\n"
         print "R  G\t Fitness"
         for i, ind in enumerate(self.individuals[-5:]): ind.xprint()
         
@@ -237,7 +237,7 @@ class comManager:
         plt.show()
         
 ###############################################################################
-##      Definicion de operadores geneticos
+##      Genetic operators definition
 ###############################################################################    
     
 def mutate(mate1):
@@ -287,7 +287,7 @@ def similarityMatrix(pop,plot=False):
     return sim
 
 ###############################################################################
-##      Definicion de funciones para optimizar TestFunctions
+##     TestFunctions definition
 ############################################################################### 
 
 def sphere(f,**kpars):
@@ -337,7 +337,7 @@ def himmelblau(f,**kpars):
 if __name__ == "__main__":
     
     GENDIM = 4
-    # optimizacion de funcion esferica
+    # 4 dim optimization with spherical function, teoric solution = (0,0,0,0)
     #ll = comManager(pop=100,cmin=[-1,-1,-1,-1],cmax=[1,1,1,1])
     #ll.run(sphere,T=50)
     #ll.runImproved(sphere,T=100)
@@ -347,41 +347,12 @@ if __name__ == "__main__":
     #similarityMatrix(ll.individuals,plot=True)
     #ll.plotBest()
 
-    GENDIM = 2
-    # optimizacion de la funcion de beale
-    #ll = comManager(pop=50,cmin=[-4.5,-4.5],cmax=[4.5,4.5])
-    #ll.run(beale,T=50,maxFit=-1.0e-4)
-    #ll.plotFitnessLandscape2D(beale)
-    #similarityMatrix(ll.individuals,plot=True)
-    #ll.runConstrained(beale,circular,T=100,maxFit=-1.0e-5,radius=3.5)
-
-    # optimizacion de la funcion de rosenbrock
-    #ll = comManager(pop=100,cmin=[-2.,-2.],cmax=[2.,2.])
-    #ll.run(rosenbrock,T=100,maxFit=-1.0e-8)
-    #ll.runConstrained(rosenbrock,circular,T=100,maxFit=-1.0e-8,radius=2)
-    #ll = comManager(pop=200,cmin=[-1.5,-0.5],cmax=[1.5,2.5])
-    #ll.runConstrained(rosenbrock,limRosenbrock,T=100)
-    #ll.xprint()
-    #ll.plotBest()
-    
-    # optimizacion de funcion de matyas
-    #ll = comManager(pop=50,cmin=[-2,-2],cmax=[2,2])
-    #ll.run(matyas,T=250,maxFit=-1.0e-8)
-    #ll.runConstrained(matyas,circular,T=15,radius=.1)
-    #ll.xprint()
-    #ll.plotBest()
-
-    # optimizacion de funcion de ackley
-    #ll = comManager(pop=50,cmin=[-10,-10],cmax=[10,10])
-    #ll.run(ackley,T=1)
-    #ll.xprint()
-
-    # optimizacion de funcion de himmelblau, solucion teórica (-0.270845,-0.923039)
+    # 2 dim optimization of himmelblau funtion, teoric solution = (-0.270845,-0.923039)
     ll = comManager(pop=20,cmin=[-1.,-1.],cmax=[1.,1.])
     ll.run(himmelblau,T=100,maxFit=185)
     #ll.runConstrained(himmelblau,circular,radius=1.,T=1)
     ll.plotFitnessLandscape2D(himmelblau)
-    similarityMatrix(ll.individuals,plot=True)
+    #similarityMatrix(ll.individuals,plot=True)
     
     # optimizacion de funcion de holder
     #ll = comManager(pop=10,cmin=[-10,-10],cmax=[10,10])
