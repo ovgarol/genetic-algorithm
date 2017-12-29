@@ -347,6 +347,7 @@ if __name__ == "__main__":
     #similarityMatrix(ll.individuals,plot=True)
     #ll.plotBest()
 
+    GENDIM = 2
     # 2 dim optimization of himmelblau funtion, teoric solution = (-0.270845,-0.923039)
     ll = comManager(pop=20,cmin=[-1.,-1.],cmax=[1.,1.])
     ll.run(himmelblau,T=100,maxFit=185)
